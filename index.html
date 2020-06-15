@@ -5,30 +5,34 @@
     <meta charset="utf-8">
     <title>MyGrub</title>
     <link rel="stylesheet" href="src/stylesheet.css">
-
+    <!-- <script type="text/javascript" src="src/user.js"></script>
+    <script type="text/javascript" src="src/restaurant.js"></script> -->
+    <script type="text/javascript" src="src/index.js"></script>
   </head>
+
   <body>
     <!-- left column -->
     <div id = "restaurants">
-
+      <h1>Restaurants</h1> 
+      <p>Select a restaurant below to view their menu:</p>
     </div>
 
     <!-- center column -->
     <div id = restaurantMenu>
-        
+      <h1>Menu:</h1>
+      <p>Select what you would like to eat!</p>
     </div>
 
     <!-- right column -->
     <div id="user-cart-container">
+      <h1>Your Cart</h1>
         <div class="cart-items">
-            <ul class="item">
-            </ul>
+            <ol class="item">
+            </ol>
+            <p class="cart-total">Total: </p>
+            <button class="checkout" type="button">Checkout!</button>
         </div>
     </div>
 
-
-    <script type="text/javascript" src="src/user.js"></script>
-    <script type="text/javascript" src="src/restaurant.js"></script>
-    <script type="text/javascript" src="src/index.js"></script>
   </body>
 </html>
