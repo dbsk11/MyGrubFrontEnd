@@ -1,52 +1,55 @@
 document.addEventListener('DOMContentLoaded', function(e){
 
-
-// Jessica's code
+// Users Cart
     const usersCartUrl = "http://localhost:3000/users_carts"
     const restaurantMenusUrl = "http://localhost:3000/restaurant_menus"
     const itemsUrl = "http://localhost:3000/items"
-
-    
-    const itemUl = document.querySelector('.item')
+    const itemOl = document.querySelector('.item')
 
     const fetchCartItems = () => {
         fetch(`${usersCartUrl}/1`)
         .then(resp => resp.json())
         .then(cartItems => renderCartItems(cartItems))
-    }
+    };
     
     const renderCartItems = cartItems => {
         cartItems.forEach(cartItem => {
             renderCartItem(cartItem)
         })
-    }
+    };
+
+    let total = 0
 
     const renderCartItem = (cartItem) => {
         const itemLi = document.createElement('li')
         itemLi.dataset.id = cartItem.id
+        itemLi.className = "user"
         const itemId = `${cartItem.item_id}`
+        const quantity = `${cartItem.quantity}`
 
-        fetch(itemsURL)
+        fetch(`${itemsUrl}/${itemId}`)
         .then(resp => resp.json())
-        .then
-        console.log(itemId)
-        // const itemName = Item.find_by_id(itemId)
+        .then(item => {
+            itemLi.innerHTML = `
+            ${item.name}            
+            <br/>
+            Price: $${item.price}
+            <br/>
+            Quantity: ${quantity}
+            `
+            itemOl.appendChild(itemLi)
 
-        // const itemPrice = 
-        const itemQuantity = `${cartItem.quantity}` 
+            let subtotal = quantity * parseInt(item.price)
+            total = total + subtotal 
+            const pTotal = document.querySelector('.cart-total')
+            pTotal.innerText = `Total: $${total}`
+        })
 
-        itemLi.innerHTML = `
-        name: ${cartItem.item_id}
-        quantity:
-        price: 
-        `
-        // console.log(itemLi)
-    }
-
+    };
 
     fetchCartItems()
 
-    /////Jessica's Code End
+    /////End Users Cart
 
 
 
