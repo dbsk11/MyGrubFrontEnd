@@ -7,21 +7,23 @@ document.addEventListener('DOMContentLoaded', function(e){
     const itemsUrl = "http://localhost:3000/items"
     const itemOl = document.querySelector('.item')
     let total = 0
-    let userCardId = 2
+    let userCardId = 1
 
+ // Fetching items in usercart from database
     const fetchCartItems = () => {
         fetch(`${usersCartUrl}/${userCardId}`)
         .then(resp => resp.json())
         .then(cartItems => renderCartItems(cartItems))
     };
-    
+
+// Rendering all cart items
     const renderCartItems = cartItems => {
         cartItems.forEach(cartItem => {
             renderCartItem(cartItem)
         })
     };
 
-
+// Rendering single cart item
     const renderCartItem = (cartItem) => {
         const itemLi = document.createElement('li')
         itemLi.dataset.id = cartItem.id
@@ -53,19 +55,16 @@ document.addEventListener('DOMContentLoaded', function(e){
 
     fetchCartItems()
 
-    /////End Users Cart
+//End Users Cart
 
 
 
-
-
-    ////Don's code begins
-
+// Fetch restaurant menu from database
     fetch("http://localhost:3000/restaurant_menus")
     .then(r => r.json())
     .then(restaurants => restaurants.forEach(x => createRestaurant(x)))
     
-    
+// creating restaurant div
     restaurants = document.getElementById("restaurants")
     function createRestaurant(restaurant) {
         restaurantTag = document.createElement("div")
@@ -83,11 +82,13 @@ document.addEventListener('DOMContentLoaded', function(e){
     }
     restaurantMenu = document.getElementById("restaurantMenu")
     
+// showing menu
     function showMenu(menu){
         restaurantMenu.innerHTML = ""
         menu.forEach(createItem)
     }
     
+// showing items in menu
     function createItem(item){
         itemDiv = document.createElement("div")
         itemDiv.dataset.id = item.id
@@ -100,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         restaurantMenu.append(itemDiv)
     }
     
+//click eventlistener
     document.addEventListener("click", function(e) {
         if (e.target.className === "restaurant"){
             let restaurantId = e.target.dataset.id
@@ -127,16 +129,7 @@ document.addEventListener('DOMContentLoaded', function(e){
             cartList.remove()
         }
     })
-    
-    
-    
-///don's code ends
-
-
-
-
-
-
-
+        
+// end of restaurant menu/item code
 
 })
