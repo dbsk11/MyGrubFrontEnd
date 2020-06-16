@@ -124,7 +124,12 @@ document.addEventListener('DOMContentLoaded', function(e){
             .then(e.target.parentNode.remove())
         } else if(e.target.className === "checkout"){
             cartList = document.getElementsByClassName("item")[0]
+            
+            fetch(`${cartItemUrl}`, {
+                method: "DELETE"
+            })
             cartList.remove()
+
             const pTotal = document.querySelector('.cart-total')
             pTotal.innerText = `Total: $ 0`       
         }
