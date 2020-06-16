@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(e){
-
-// Users Cart
+// constants
     const usersCartUrl = "http://localhost:3000/users_carts"
     const cartItemUrl = "http://localhost:3000/cart_items"
     const restaurantMenusUrl = "http://localhost:3000/restaurant_menus"
@@ -9,21 +8,21 @@ document.addEventListener('DOMContentLoaded', function(e){
     let total = 0
     let userCardId = 1
 
- // Fetching items in usercart from database
+ // UserCart - fetching usercart data
     const fetchCartItems = () => {
         fetch(`${usersCartUrl}/${userCardId}`)
         .then(resp => resp.json())
         .then(cartItems => renderCartItems(cartItems))
     };
 
-// Rendering all cart items
+// UserCart - render all cart items
     const renderCartItems = cartItems => {
         cartItems.forEach(cartItem => {
             renderCartItem(cartItem)
         })
     };
 
-// Rendering single cart item
+// UserCart - render individual cart item
     const renderCartItem = (cartItem) => {
         const itemLi = document.createElement('li')
         itemLi.dataset.id = cartItem.id
@@ -35,12 +34,9 @@ document.addEventListener('DOMContentLoaded', function(e){
         .then(resp => resp.json())
         .then(item => {
             itemLi.innerHTML = `
-            ${item.name}            
-            <br/>
-            Price: $${item.price}
-            <br/>
-            Quantity: ${quantity}
-            <br/>
+            <h2>${item.name}</h2>
+            <h3 class="price">Price: $ ${item.price}</h3>
+            <h3>Quantity: ${quantity}</h3>
             <button class="Remove Item">Remove Item</button>
             `
             itemOl.appendChild(itemLi)
@@ -48,23 +44,17 @@ document.addEventListener('DOMContentLoaded', function(e){
             let subtotal = quantity * parseInt(item.price)
             total = total + subtotal 
             const pTotal = document.querySelector('.cart-total')
-            pTotal.innerText = `Total: $${total}`
+            pTotal.innerText = `Total: $ ${total}`
         })
 
     };
 
-    fetchCartItems()
-
-//End Users Cart
-
-
-
-// Fetch restaurant menu from database
-    fetch("http://localhost:3000/restaurant_menus")
+// RestaurantMenu - fetch restaurant data
+    fetch(restaurantMenusUrl)
     .then(r => r.json())
-    .then(restaurants => restaurants.forEach(x => createRestaurant(x)))
+    .then(restaurants => restaurants.forEach(x => createRestaurant(x)));
     
-// creating restaurant div
+// RestaurantMenu - creating restaurant div and restaurant info
     const restaurants = document.getElementById("restaurants")
     function createRestaurant(restaurant) {
         const restaurantTag = document.createElement("div")
@@ -79,16 +69,17 @@ document.addEventListener('DOMContentLoaded', function(e){
         <hr>
         `
         restaurants.append(restaurantTag)
-    }
-    restaurantMenu = document.getElementById("restaurantItems")
+    };
     
-// showing menu
+// Items - rendering restaurant menu
+    restaurantMenu = document.getElementById("restaurantItems")
+
     function showMenu(menu){
         restaurantMenu.innerHTML = ""
         menu.forEach(createItem)
-    }
+    };
     
-// showing items in menu
+// Items - rendering individual items on restaurant menu
     function createItem(item){
         const itemDiv = document.createElement("div")
         itemDiv.dataset.id = item.id
@@ -99,16 +90,16 @@ document.addEventListener('DOMContentLoaded', function(e){
         <hr>
         `
         restaurantMenu.append(itemDiv)
-    }
+    };
     
-//click eventlistener
+//click eventlisteners
     document.addEventListener("click", function(e) {
         if (e.target.className === "restaurant"){
-            let restaurantId = e.target.dataset.id
-            fetch(`http://localhost:3000/restaurant_menus/${restaurantId}`).then(r => r.json()).then(showMenu)
+            const restaurantId = e.target.dataset.id
+            fetch(`${restaurantMenusUrl}/${restaurantId}`).then(r => r.json()).then(showMenu)
         } else if(e.target.className === "addToCart"){
-            let itemId = e.target.parentNode.dataset.id
-            fetch("http://localhost:3000/cart_items", {
+            const itemId = e.target.parentNode.dataset.id
+            fetch(cartItemUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -117,48 +108,28 @@ document.addEventListener('DOMContentLoaded', function(e){
                 body: JSON.stringify({item_id: itemId, quantity: 1, users_cart_id: userCardId})
             }).then(r => r.json()).then(renderCartItem)
         } else if(e.target.className === "Remove Item"){
-            let cartItemId = e.target.parentNode.dataset.id
-            fetch(`http://localhost:3000/cart_items/${cartItemId}`, {
+            const cartItemId = e.target.parentNode.dataset.id
+            const parentNode = e.target.parentNode
+
+            const priceTag = parentNode.querySelector('.price')
+            const price = parseInt(priceTag.innerText.split(" ")[2])
+            const pTotal = document.querySelector('.cart-total')
+            const subtotal = parseInt(pTotal.innerText.split(" ")[2])
+            let newTotal = subtotal - price
+            pTotal.innerText = `Total: $ ${newTotal}`       
+        
+            fetch(`${cartItemUrl}/${cartItemId}`, {
                 method: "DELETE"
             })
             .then(e.target.parentNode.remove())
-
-            const removeItem = (item) => {
-                
-            }
+        } else if(e.target.className === "checkout"){
+            cartList = document.getElementsByClassName("item")[0]
+            cartList.remove()
+            const pTotal = document.querySelector('.cart-total')
+            pTotal.innerText = `Total: $ 0`       
         }
-    })
+    });
 
-   
+    fetchCartItems();
 
-    // document.addEventListener("click", function(e) {
-    //     if (e.target.className === "restaurant"){
-    //         let restaurantId = e.target.dataset.id
-    //         fetch(`http://localhost:3000/restaurant_menus/${restaurantId}`).then(r => r.json()).then(showMenu)
-    //     } else if (e.target.className === "addToCart") {
-    //         let itemId = e.target.parentNode.dataset.id
-            // fetch(`http://localhost:3000/cart_items`, {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "accept": "application/json"
-            //     },
-            //     body: JSON.stringify({item_id: itemId, quantity: 1, users_cart_id: userCardId})
-            // }).then(r => r.json()).then(renderCartItem)
-    //     } else if (e.target.className === "Remove Item"){
-    //         let cartItemId = e.target.parentNode.dataset.id
-    //         console.log(cartItemId)
-    //         fetch(`http://localhost:3000/cart_items/${cartItemId}`, {
-    //             method: 'DELETE'
-
-    //         }).then(e.target.parentNode.remove())
-    //     } else if (e.target.className === "checkout") {
-    //         cartList = document.getElementsByClassName("item")[0]
-    //         total = 0
-    //         cartList.remove()
-    //     }
-    // })
-        
-// end of restaurant menu/item code
-
-})
+});
