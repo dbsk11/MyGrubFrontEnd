@@ -2,12 +2,15 @@ document.addEventListener('DOMContentLoaded', function(e){
 
 // Users Cart
     const usersCartUrl = "http://localhost:3000/users_carts"
+    const cartItemUrl = "http://localhost:3000/cart_items"
     const restaurantMenusUrl = "http://localhost:3000/restaurant_menus"
     const itemsUrl = "http://localhost:3000/items"
     const itemOl = document.querySelector('.item')
+    let total = 0
+    let userCardId = 2
 
     const fetchCartItems = () => {
-        fetch(`${usersCartUrl}/1`)
+        fetch(`${usersCartUrl}/${userCardId}`)
         .then(resp => resp.json())
         .then(cartItems => renderCartItems(cartItems))
     };
@@ -18,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function(e){
         })
     };
 
-    let total = 0
 
     const renderCartItem = (cartItem) => {
         const itemLi = document.createElement('li')
@@ -36,6 +38,8 @@ document.addEventListener('DOMContentLoaded', function(e){
             Price: $${item.price}
             <br/>
             Quantity: ${quantity}
+            <br/>
+            <button class="Remove Item">Remove Item</button>
             `
             itemOl.appendChild(itemLi)
 
@@ -108,8 +112,19 @@ document.addEventListener('DOMContentLoaded', function(e){
                     "Content-Type": "application/json",
                     "accept": "application/json"
                 },
-                body: JSON.stringify({item_id: itemId, quantity: 1, users_cart_id: 1})
-            }).then(r => r.json()).then(console.log)
+                body: JSON.stringify({item_id: itemId, quantity: 1, users_cart_id: userCardId})
+            }).then(r => r.json()).then(renderCartItem)
+        } else if (e.target.className === "Remove Item"){
+            let cartItemId = e.target.parentNode.dataset.id
+            console.log(cartItemId)
+            fetch(`http://localhost:3000/cart_items/${cartItemId}`, {
+                method: 'DELETE'
+
+            }).then(e.target.parentNode.remove())
+        } else if (e.target.className === "checkout") {
+            cartList = document.getElementsByClassName("item")[0]
+            total = 0
+            cartList.remove()
         }
     })
     
