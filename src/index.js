@@ -65,9 +65,9 @@ document.addEventListener('DOMContentLoaded', function(e){
     .then(restaurants => restaurants.forEach(x => createRestaurant(x)))
     
 // creating restaurant div
-    restaurants = document.getElementById("restaurants")
+    const restaurants = document.getElementById("restaurants")
     function createRestaurant(restaurant) {
-        restaurantTag = document.createElement("div")
+        const restaurantTag = document.createElement("div")
         restaurantTag.dataset.id = restaurant.id
         restaurantTag.className = "restaurant"
         restaurantTag.innerHTML = ""
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         `
         restaurants.append(restaurantTag)
     }
-    restaurantMenu = document.getElementById("restaurantMenu")
+    restaurantMenu = document.getElementById("restaurantItems")
     
 // showing menu
     function showMenu(menu){
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function(e){
     
 // showing items in menu
     function createItem(item){
-        itemDiv = document.createElement("div")
+        const itemDiv = document.createElement("div")
         itemDiv.dataset.id = item.id
         itemDiv.innerHTML = `
         <p><strong>${item.name}</strong> <em>$${item.price}</em></p>
@@ -106,9 +106,9 @@ document.addEventListener('DOMContentLoaded', function(e){
         if (e.target.className === "restaurant"){
             let restaurantId = e.target.dataset.id
             fetch(`http://localhost:3000/restaurant_menus/${restaurantId}`).then(r => r.json()).then(showMenu)
-        } else if (e.target.className === "addToCart") {
+        } else if(e.target.className === "addToCart"){
             let itemId = e.target.parentNode.dataset.id
-            fetch(`http://localhost:3000/cart_items`, {
+            fetch("http://localhost:3000/cart_items", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -116,19 +116,48 @@ document.addEventListener('DOMContentLoaded', function(e){
                 },
                 body: JSON.stringify({item_id: itemId, quantity: 1, users_cart_id: userCardId})
             }).then(r => r.json()).then(renderCartItem)
-        } else if (e.target.className === "Remove Item"){
+        } else if(e.target.className === "Remove Item"){
             let cartItemId = e.target.parentNode.dataset.id
-            console.log(cartItemId)
             fetch(`http://localhost:3000/cart_items/${cartItemId}`, {
-                method: 'DELETE'
+                method: "DELETE"
+            })
+            .then(e.target.parentNode.remove())
 
-            }).then(e.target.parentNode.remove())
-        } else if (e.target.className === "checkout") {
-            cartList = document.getElementsByClassName("item")[0]
-            total = 0
-            cartList.remove()
+            const removeItem = (item) => {
+                
+            }
         }
     })
+
+   
+
+    // document.addEventListener("click", function(e) {
+    //     if (e.target.className === "restaurant"){
+    //         let restaurantId = e.target.dataset.id
+    //         fetch(`http://localhost:3000/restaurant_menus/${restaurantId}`).then(r => r.json()).then(showMenu)
+    //     } else if (e.target.className === "addToCart") {
+    //         let itemId = e.target.parentNode.dataset.id
+            // fetch(`http://localhost:3000/cart_items`, {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         "accept": "application/json"
+            //     },
+            //     body: JSON.stringify({item_id: itemId, quantity: 1, users_cart_id: userCardId})
+            // }).then(r => r.json()).then(renderCartItem)
+    //     } else if (e.target.className === "Remove Item"){
+    //         let cartItemId = e.target.parentNode.dataset.id
+    //         console.log(cartItemId)
+    //         fetch(`http://localhost:3000/cart_items/${cartItemId}`, {
+    //             method: 'DELETE'
+
+    //         }).then(e.target.parentNode.remove())
+    //     } else if (e.target.className === "checkout") {
+    //         cartList = document.getElementsByClassName("item")[0]
+    //         total = 0
+    //         cartList.remove()
+    //     }
+    // })
         
 // end of restaurant menu/item code
 
