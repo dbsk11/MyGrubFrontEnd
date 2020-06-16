@@ -5,37 +5,48 @@
     <meta charset="utf-8">
     <title>MyGrub</title>
     <link rel="stylesheet" href="src/stylesheet.css">
-    <!-- <script type="text/javascript" src="src/user.js"></script>
+    <!-- <script type="text/javascript" src="src/user.js?"></script>
     <script type="text/javascript" src="src/restaurant.js"></script> -->
     <script type="text/javascript" src="src/index.js"></script>
   </head>
 
   <body>
-    <!-- left column -->
-    <div class="column left" id = "restaurants">
-      <h1>Restaurants</h1> 
-      <p>Select a restaurant below to view their menu:</p>
-    </div>
-
-    <!-- center column -->
-    <div class="column middle" id = restaurantMenu>
-      <h1>Menu:</h1>
-      <p>Select what you would like to eat!</p>
-      <div id = restaurantItems>
-
-      </div>
-    </div>
-
-    <!-- right column -->
-    <div class="column right" id="user-cart-container">
-      <h1>Your Cart</h1>
-        <div class="cart-items">
-            <ol class="item">
-            </ol>
-            <p class="cart-total">Total: </p>
-            <button class="checkout" type="button">Checkout!</button>
+    <div class="page-container">
+        <div class="header-container">
+          <h1>My Grub</h1>
+          <h2>Description</h3>
+        </div>
+        <div class = "main-container">
+          <!-- left column -->
+          <div class="column-left">
+            <h1>Restaurants</h1> 
+            <p class="headers">Select a restaurant below to view their menu:</p>
+              <div class="list-restaurants" id="restaurants">
+    
+              </div>
+          </div>
+    
+          <!-- center column -->
+          <div class="column-middle" id = restaurantMenu>
+            <h1>Menu:</h1>  
+            <p class="headers">Select what you would like to eat!</p>
+            <div class="restaurant-items" id = restaurantItems>
+    
+            </div>
+          </div>  
+    
+          <!-- right column -->
+          <div class="column-right" id="user-cart-container">
+            <h1>Your Cart</h1>
+              <div class="cart-items">
+                  <ol class="item">
+                  </ol>
+                  <h3 class="cart-total">Total: </h3>
+                  <button class="checkout" type="button">Checkout!</button>
+              </div>
+          </div>
         </div>
     </div>
-
+    
   </body>
 </html>

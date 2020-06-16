@@ -1,63 +1,115 @@
-/* .column {
+.page-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    float: left;
-    padding: 10px;
-    height:100vh;
+    border-style: solid;
+    height: 100vh;
+    width: 100vw;
 }
 
-.restaurants, .user-cart-container {
-    width: 30%;
-    background-color: #fcdcdb;
-    justify-content: flex-start;
-}
-
-.restaurantMenu {
-    width: 40%;
-    background-image: url("https://i.pinimg.com/564x/8b/a5/c3/8ba5c377aea0d1e1fbba849b01d5a415.jpg");
-    background-color: #cccccc;
-}
-/* 
-.container {
+.header-container{
     display: flex;
+    height: 15vh;
+    background: #fafffe;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
 }
 
-.item-center {
-    flex-grow: 1;
+.main-container{
+    display: flex;
+    flex-direction: row;
+    border-style: solid;
+    height: 85vh;
+    width: 100vw;
+
 }
 
-.item + .item {
-    margin-left: 2%;
+.column-left {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    background: #fafffe;
+    justify-content: flex-start;
+    border-style: double;
+    padding: 20px;
 }
 
-.container {
-    display:flex
-    flex-wrap:wrap;
-    flex-direction:row;
-    justify-content:flex-start;
-    align-items:stretch;
+.column-middle {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    background: #fafffe;
+    border-style: double;
+    padding: 20px
 }
 
+.column-right {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    background: #fafffe;
+    justify-content: flex-start;
+    border-style: double;
+    padding: 20px
+}
 
-.left {order:1; background:red; flex-basis:100%; height:300px}
-.middle {order:3; background: green;flex-basis:100%; height:300px;}
-.right {order:2; background:yellow;flex-basis:100%; height:300px;}
+.list-restaurants {
+    overflow: scroll;
+    text-align: center;
+}
 
-.container {
-    flex-wrap:nowrap;
-} 
+.restaurant-items {
+    overflow: scroll;
+}
 
- .left {
-     flex-basis:200px;
-     order:1;
- }
- .middle {
-     flex-basis:1;
-     order:2;
- }
- .right {
-     flex-basis:200px;
-     order:3;
- } */
+.cart-items {
+    overflow: scroll;
+}
+
+.headers {
+    text-align: center;
+}
+
+/* * {
+    box-sizing: border-box;
+    font-family: interstate, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #0a5e7d;
+} */
+
+h1 {
+    font-family: interstate, sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    color: #219eac;
+    text-align: center;
+}
+
+h2 {
+    font-family: interstate, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    text-align: center;
+}
+
+h3 {
+    font-family: interstate, sans-serif;
+    font-weight: 550;
+    font-style: normal;
+    color: #313d5a;
+}
+
+h4 {
+    font-family: interstate, sans-serif;
+    font-weight: 550;
+    font-style: normal;
+    color: #313d5a;
+}
+
+p {
+    font-family: interstate, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #313d5a;
+}

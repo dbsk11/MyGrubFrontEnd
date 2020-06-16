@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded', function(e){
         .then(resp => resp.json())
         .then(item => {
             itemLi.innerHTML = `
-            <h2>${item.name}</h2>
-            <h3 class="price">Price: $ ${item.price}</h3>
-            <h3>Quantity: ${quantity}</h3>
+            <h4>${item.name}</h4>
+            <p class="price">Price: $ ${item.price}</p>
+            <p>Quantity: ${quantity}</p>
             <button class="Remove Item">Remove Item</button>
             `
             itemOl.appendChild(itemLi)
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         restaurantTag.className = "restaurant"
         restaurantTag.innerHTML = ""
         restaurantTag.innerHTML = `
-        <h2>${restaurant.name}</h2>
+        <h3>${restaurant.name}</h3>
         <h4>${restaurant.cuisine}</h4>
         <p>${restaurant.address}</p>
         <p>${restaurant.phone_number}</p>
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         const itemDiv = document.createElement("div")
         itemDiv.dataset.id = item.id
         itemDiv.innerHTML = `
-        <p><strong>${item.name}</strong> <em>$${item.price}</em></p>
+        <h4>${item.name} $${item.price}</h4>
         <p>${item.description}</p>
         <button class="addToCart">Add to Cart</button>
         <hr>
