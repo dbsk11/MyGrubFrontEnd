@@ -23,33 +23,6 @@ cartItems.forEach(cartItem => {
 };
 
 // UserCart - render individual cart item
-<<<<<<< HEAD
-const renderCartItem = (cartItem) => {
-const itemLi = document.createElement('li')
-itemLi.dataset.id = cartItem.id
-itemLi.className = "user"
-const itemId = `${cartItem.item_id}`
-const quantity = `${cartItem.quantity}`
-
-fetch(`${itemsUrl}/${itemId}`)
-.then(resp => resp.json())
-.then(item => {
-    itemLi.innerHTML = `
-    <h4>${item.name}</h4>
-    <p class="price">Price: $ ${item.price}</p>
-    <p>Quantity: ${quantity}</p>
-    <button class="Remove Item">Remove Item</button>
-    `
-    itemOl.appendChild(itemLi)
-
-    let subtotal = quantity * parseInt(item.price)
-    total = total + subtotal 
-    const pTotal = document.querySelector('.cart-total')
-    pTotal.innerText = `Total: $ ${total}`
-})
-
-};
-=======
     const renderCartItem = (cartItem) => {
         const itemLi = document.createElement('li')
         itemLi.dataset.id = cartItem.id
@@ -73,7 +46,6 @@ fetch(`${itemsUrl}/${itemId}`)
         })
 
     };
->>>>>>> css
 
 // RestaurantMenu - fetch restaurant data
 fetch(restaurantMenusUrl).then(r => r.json()).then(restaurants => restaurants.forEach(x => createRestaurant(x)));
