@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         .then(resp => resp.json())
         .then(item => {
             itemLi.innerHTML = `
-            <h4 class="item">${item.name} - <em>$ ${item.price}</em></h4>
+            <h4 class="item">${item.name} - <em>$$ ${item.price}</em></h4>
             <button class="Remove Item">Remove Item</button>
             `
             itemOl.appendChild(itemLi)
