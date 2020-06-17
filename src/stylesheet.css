@@ -95,6 +95,7 @@
 .panel-header {
     font-size: 20px;
     font-weight: 500;
+    font-family: 'Trebuchet MS', sans-serif
 }
 
 /* panel css */
@@ -131,14 +132,14 @@ h2 {
     color: #F8F32B;
     font-style: normal;
     text-align: center;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family: 'Franklin Gothic Medium', sans-serif
 }
 
 h3 {
     font-weight: 550;
     font-style: normal;
     color: #170A1C;
-    font-family: 'Courier New', Courier, monospace
+    font-family: 'Trebuchet MS', sans-serif
 }
 
 .restaurant-info {
@@ -149,12 +150,12 @@ h4 {
     font-weight: 550;
     font-style: normal;
     color: #170A1C;
-    font-family: 'Courier New', Courier, monospace
+    font-family: 'Courier New', monospace
 }
 
 p {
     font-weight: 400;
     font-style: normal;
     color: #170A1C;
-    font-family: 'Courier New', Courier, monospace
+    font-family: 'Courier New', monospace
 }
