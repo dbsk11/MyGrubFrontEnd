@@ -13,10 +13,11 @@
     height: 15vh;
     width: 98vw;
     background: #0B4F6C;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
 }
+
 
 .panel-container {
     display:flex;
@@ -52,6 +53,7 @@
 
 .header {
     color: #F8F32B;
+    font-family: 'Trebuchet MS', sans-serif
 }
 
 /* main container css */
@@ -94,8 +96,8 @@
 
 .panel-header {
     font-size: 20px;
-    font-weight: 500;
-    font-family: 'Trebuchet MS', sans-serif
+    font-weight: 600;
+    font-family: 'Gill Sans', sans-serif
 }
 
 /* panel css */
@@ -133,6 +135,15 @@ h2 {
     font-style: normal;
     text-align: center;
     font-family: 'Franklin Gothic Medium', sans-serif
+}
+
+#restaurantInfo h3 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FF0000; 
+    font-family: 'Gill Sans', sans-serif;
+    margin-top: 0em;
 }
 
 h3 {
