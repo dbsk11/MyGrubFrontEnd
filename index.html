@@ -20,6 +20,14 @@
           <!-- left column -->
           <div class="column-left">
             <h1>Restaurants</h1> 
+            <label for="cuisine">Select a Cuisine</label>
+
+            <select name="cuisine" class="cuisine">
+              <option value="All" default>All</option>
+              <option value="American">American</option>
+              <option value="Italian">Italian</option>
+              <option value="Thai">Thai</option>
+            </select>
             <p class="headers">Select a restaurant below to view their menu:</p>
               <div class="list-restaurants" id="restaurants">
     
@@ -28,8 +36,19 @@
     
           <!-- center column -->
           <div class="column-middle" id = restaurantMenu>
-            <h1>Menu:</h1>  
-            <p class="headers">Select what you would like to eat!</p>
+            <h1>Menu</h1>  
+            <div id = "restaurantInfo"></div>
+            <label for="cuisine">Select a Category</label>
+
+            <select name="category" class="category">
+              <option value="All" default>All</option>
+              <option value="Appetizer">Appetizer</option>
+              <option value="Entree">Entree</option>
+              <option value="Dessert">Dessert</option>
+              <option value="Beverages">Beverages</option>
+
+
+            </select>
             <div class="restaurant-items" id = restaurantItems>
     
             </div>
