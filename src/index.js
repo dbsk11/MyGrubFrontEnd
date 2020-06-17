@@ -96,31 +96,29 @@ function showMenu(menu){
 };
 
 // Items - rendering individual items on restaurant menu
-function createItem(item){
-    const itemDiv = document.createElement("div")
-    itemDiv.dataset.id = item.id
-    itemDiv.innerHTML = `
-    <h4>${item.name} - <em>$${item.price}</em></h4>
-    <p>${item.description}</p>
-    <button class="addToCart">Add to Cart</button>
-    <hr>
-    `
-    restaurantMenu.append(itemDiv)
-};
+    function createItem(item){
+        const itemDiv = document.createElement("div")
+        itemDiv.dataset.id = item.id
+        itemDiv.innerHTML = `
+        <h4>${item.name} - <em>$${item.price}</em></h4>
+        <p>${item.description}</p>
+        <button class="addToCart">Add to Cart</button>
+        <hr>
+        `
+        restaurantMenu.append(itemDiv)
+    };
 
+//Restaurant - adding info to menu panel
+    function addRestaurantInfo(id){
+        infoDiv = document.querySelector("#restaurantInfo")
+        restroDesc = restaurantList[id - 1]
+        infoDiv.innerHTML = ""
+        infoDiv.innerHTML = `
+        <h3>${restroDesc.name} - <em>${restroDesc.phone_number}</em></h3>
+        `
+    }
 
-function addRestaurantInfo(id){
-    infoDiv = document.querySelector("#restaurantInfo")
-    restroDesc = restaurantList[id - 1]
-    infoDiv.innerHTML = ""
-    infoDiv.innerHTML = `
-    <h3>${restroDesc.name}</h3>
-    <p>${restroDesc.address}</p>
-    <p>${restroDesc.phone_number}</p>
-    `
-}
 //click eventlisteners
-
 //    let restaurantId = 1
 document.addEventListener("click", function(e) {
 if (e.target.className === "restaurant"){
@@ -142,8 +140,10 @@ if (e.target.className === "restaurant"){
     const cartItemId = e.target.parentNode.dataset.id
     const parentNode = e.target.parentNode
 
-    const priceTag = parentNode.querySelector('.price')
-    const price = parseInt(priceTag.innerText.split(" ")[2])
+    const itemTag = parentNode.querySelector('.item')
+    const itemTagArray = itemTag.innerText.split(" ")
+    const priceIndex = itemTagArray.length -1
+    const price = itemTagArray[priceIndex]
     const pTotal = document.querySelector('.cart-total')
     const subtotal = parseInt(pTotal.innerText.split(" ")[2])
     let newTotal = subtotal - price
