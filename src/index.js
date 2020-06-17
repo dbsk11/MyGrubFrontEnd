@@ -34,9 +34,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         .then(resp => resp.json())
         .then(item => {
             itemLi.innerHTML = `
-            <h4>${item.name}</h4>
-            <p class="price">Price: $ ${item.price}</p>
-            <p>Quantity: ${quantity}</p>
+            <h4 class="item">${item.name} - <em>$ ${item.price}</em></h4>
             <button class="Remove Item">Remove Item</button>
             `
             itemOl.appendChild(itemLi)
@@ -50,22 +48,20 @@ document.addEventListener('DOMContentLoaded', function(e){
     };
 
 // RestaurantMenu - fetch restaurant data
-    fetch(restaurantMenusUrl)
-    .then(r => r.json())
-    .then(restaurants => restaurants.forEach(x => createRestaurant(x)));
-    
+    fetch(restaurantMenusUrl).then(r => r.json()).then(restaurants => restaurants.forEach(x => createRestaurant(x)));
+    let restaurantList = []
+    let menuList = []
+
 // RestaurantMenu - creating restaurant div and restaurant info
     const restaurants = document.getElementById("restaurants")
     function createRestaurant(restaurant) {
+        restaurantList.push(restaurant)
         const restaurantTag = document.createElement("div")
         restaurantTag.dataset.id = restaurant.id
-        restaurantTag.className = "restaurant"
+        restaurantTag.className = "restaurant-info"
         restaurantTag.innerHTML = ""
         restaurantTag.innerHTML = `
-        <h3>${restaurant.name}</h3>
-        <h4>${restaurant.cuisine}</h4>
-        <p>${restaurant.address}</p>
-        <p>${restaurant.phone_number}</p>
+        <h3 class="restaurant">${restaurant.name} - <em>${restaurant.cuisine}</em></h3>
         <hr>
         `
         restaurants.append(restaurantTag)
@@ -73,9 +69,10 @@ document.addEventListener('DOMContentLoaded', function(e){
     
 // Items - rendering restaurant menu
     restaurantMenu = document.getElementById("restaurantItems")
-
+    restaurantInfo = document.getElementById("restaurantInfo")
     function showMenu(menu){
         restaurantMenu.innerHTML = ""
+        menu.forEach(item => menuList.push(item))
         menu.forEach(createItem)
     };
     
@@ -84,18 +81,31 @@ document.addEventListener('DOMContentLoaded', function(e){
         const itemDiv = document.createElement("div")
         itemDiv.dataset.id = item.id
         itemDiv.innerHTML = `
-        <h4>${item.name} $${item.price}</h4>
+        <h4>${item.name} - <em>$${item.price}</em></h4>
         <p>${item.description}</p>
         <button class="addToCart">Add to Cart</button>
         <hr>
         `
         restaurantMenu.append(itemDiv)
     };
-    
+
+//Restaurant - adding info to menu panel
+    function addRestaurantInfo(id){
+        infoDiv = document.querySelector("#restaurantInfo")
+        restroDesc = restaurantList[id - 1]
+        infoDiv.innerHTML = ""
+        infoDiv.innerHTML = `
+        <h3>${restroDesc.name} - <em>${restroDesc.phone_number}</em></h3>
+        `
+    }
+
 //click eventlisteners
+//    let restaurantId = 1
     document.addEventListener("click", function(e) {
         if (e.target.className === "restaurant"){
-            const restaurantId = e.target.dataset.id
+            restaurantId = e.target.parentNode.dataset.id
+            addRestaurantInfo(restaurantId)
+
             fetch(`${restaurantMenusUrl}/${restaurantId}`).then(r => r.json()).then(showMenu)
         } else if(e.target.className === "addToCart"){
             const itemId = e.target.parentNode.dataset.id
@@ -111,8 +121,10 @@ document.addEventListener('DOMContentLoaded', function(e){
             const cartItemId = e.target.parentNode.dataset.id
             const parentNode = e.target.parentNode
 
-            const priceTag = parentNode.querySelector('.price')
-            const price = parseInt(priceTag.innerText.split(" ")[2])
+            const itemTag = parentNode.querySelector('.item')
+            const itemTagArray = itemTag.innerText.split(" ")
+            const priceIndex = itemTagArray.length -1
+            const price = itemTagArray[priceIndex]
             const pTotal = document.querySelector('.cart-total')
             const subtotal = parseInt(pTotal.innerText.split(" ")[2])
             let newTotal = subtotal - price
@@ -123,17 +135,58 @@ document.addEventListener('DOMContentLoaded', function(e){
             })
             .then(e.target.parentNode.remove())
         } else if(e.target.className === "checkout"){
-            cartList = document.getElementsByClassName("item")[0]
-            
-            fetch(`${cartItemUrl}`, {
-                method: "DELETE"
-            })
+            let cartList = document.querySelector(".item")
+
+            fetch(`${usersCartUrl}/${userCardId}`).then(r => r.json()).then(data => data.forEach(
+                cartData => fetch(`${cartItemUrl}/${cartData.id}`, {
+                    method: "DELETE"
+                })
+            ))
             cartList.remove()
 
             const pTotal = document.querySelector('.cart-total')
             pTotal.innerText = `Total: $ 0`       
         }
     });
+
+// Filter: Cuisine
+    const cuisineFilter = document.querySelector('.cuisine')
+    cuisineFilter.addEventListener("change", function(e){
+     if (e.target.value == "American"){
+        restaurants.innerHTML=""
+            restaurantList.filter(restro => restro.cuisine === "American").forEach(x => createRestaurant(x))
+        } else if (e.target.value === "Thai"){
+            restaurants.innerHTML=""
+            restaurantList.filter(restro => restro.cuisine === "Thai").forEach(x => createRestaurant(x))
+        } else if (e.target.value === "Italian"){
+            restaurants.innerHTML=""
+            restaurantList.filter(restro => restro.cuisine === "Italian").forEach(x => createRestaurant(x))
+        } else {
+            restaurants.innerHTML=""
+            restaurantList.forEach(x => createRestaurant(x))
+        }
+    })
+
+// Filter: Type of food
+    const categoryFilter = document.querySelector('.category')
+    categoryFilter.addEventListener("change", function(e){
+        if (e.target.value === "Appetizer") {
+            restaurantMenu.innerHTML = ""
+            showMenu(menuList.filter(item => item.category === "Appetizer"))
+        } else if (e.target.value === "Entree") {
+            restaurantMenu.innerHTML = ""
+            showMenu(menuList.filter(item => item.category === "Entree"))
+        } else if (e.target.value === "Beverages") {
+            restaurantMenu.innerHTML = ""
+            showMenu(menuList.filter(item => item.category === "Beverages"))
+        } else if (e.target.value === "Dessert"){
+            restaurantMenu.innerHTML = ""
+            showMenu(menuList.filter(item => item.category === "Dessert"))
+        } else {
+            restaurantMenu.innerHTML = ""
+            showMenu(menuList)
+        }
+    })
 
     fetchCartItems();
 

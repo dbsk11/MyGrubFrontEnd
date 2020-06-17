@@ -7,22 +7,60 @@
     
 }
 
+/* header css */
 .header-container{
     display: flex;
     height: 15vh;
+    width: 98vw;
     background: #0B4F6C;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.panel-container {
+    display:flex;
+    height:5vh;
+    width: 98vw;
+    flex-direction: row;
+    background: #0B4F6C;
+}
+
+.restaurant-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 30vw;
+    align-items: flex-end
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 40vw;
+    align-items: flex-end
+}
+
+.cart-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 30vw;
+    align-items: flex-end
+}
+
+.header {
+    color: #F8F32B;
+}
+
+/* main container css */
 .main-container{
     display: flex;
     flex-direction: row;
     border-style: solid;
-    height: 80vh;
+    height: 75vh;
     width: 98vw;
-
 }
 
 .column-left {
@@ -54,6 +92,12 @@
     padding: 20px
 }
 
+.panel-header {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/* panel css */
 .list-restaurants {
     overflow: scroll;
     text-align: center;
@@ -67,17 +111,6 @@
     overflow: scroll;
 }
 
-.headers {
-    text-align: center;
-}
-
-/* * {
-    box-sizing: border-box;
-    font-family: interstate, sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #0a5e7d;
-} */
 
 h1 {
     font-weight: 750;
@@ -105,19 +138,23 @@ h3 {
     font-weight: 550;
     font-style: normal;
     color: #170A1C;
-    font-family: 'Lucida Sans'Verdana, sans-serif
+    font-family: 'Courier New', Courier, monospace
+}
+
+.restaurant-info {
+    text-align: center;
 }
 
 h4 {
     font-weight: 550;
     font-style: normal;
     color: #170A1C;
-    font-family: 
+    font-family: 'Courier New', Courier, monospace
 }
 
 p {
     font-weight: 400;
     font-style: normal;
     color: #170A1C;
-    font-family: 
+    font-family: 'Courier New', Courier, monospace
 }
