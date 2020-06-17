@@ -53,20 +53,8 @@ fetch(restaurantMenusUrl).then(r => r.json()).then(restaurants => restaurants.fo
 let restaurantList = []
 let menuList = []
 
-// restaurantList.forEach(restro => {
-//     if (restro.cuisine === "Thai") {
-//         thaiCuisine.push(restro)
-//     } else if (restro.cuisine === "American") {
-//         americanCuisine.push(restro)
-//     } else if (restro === "Italian") {
-//         italianCuisine.push(restro)
-//     }
-// })
-// let americanCuisine = []
-// let thaiCuisine = []
-// let italianCuisine = []
-// console.log(restaurantList)
-// console.log(thaiCuisine)
+
+
 // RestaurantMenu - creating restaurant div and restaurant info
 const restaurants = document.getElementById("restaurants")
 
@@ -77,7 +65,6 @@ function createRestaurant(restaurant) {
     restaurantTag.innerHTML = ""
     restaurantTag.innerHTML = `
     <h3 class="restaurant">${restaurant.name} - <em>${restaurant.cuisine}</em></h3>
-
     <hr>
     `
     restaurants.append(restaurantTag)
@@ -89,7 +76,6 @@ restaurantMenu = document.getElementById("restaurantItems")
 restaurantInfo = document.getElementById("restaurantInfo")
 function showMenu(menu){
     restaurantMenu.innerHTML = ""
-    menu.forEach(item => menuList.push(item))
     menu.forEach(createItem)
 };
 
@@ -122,8 +108,10 @@ document.addEventListener("click", function(e) {
 if (e.target.className === "restaurant"){
     restaurantId = e.target.parentNode.dataset.id
     addRestaurantInfo(restaurantId)
-
+    menuList = []
+    fetch(`${restaurantMenusUrl}/${restaurantId}`).then(r => r.json()).then(menu => menu.forEach(item => menuList.push(item)))
     fetch(`${restaurantMenusUrl}/${restaurantId}`).then(r => r.json()).then(showMenu)
+
 } else if(e.target.className === "addToCart"){
     const itemId = e.target.parentNode.dataset.id
     fetch(cartItemUrl, {
@@ -175,8 +163,6 @@ cuisineFilter.addEventListener("change", function(e){
 if (e.target.value == "American"){
     restaurants.innerHTML=""
     fetch(restaurantMenusUrl).then(r => r.json()).then(data => data.filter(restro => restro.cuisine === "American")).then(restaurants => restaurants.forEach(x => createRestaurant(x)));
-
-
 } else if (e.target.value === "Thai"){
     restaurants.innerHTML=""
     fetch(restaurantMenusUrl).then(r => r.json()).then(data => data.filter(restro => restro.cuisine === "Thai")).then(restaurants => restaurants.forEach(x => createRestaurant(x)));
@@ -194,22 +180,22 @@ const categoryFilter = document.querySelector('.category')
 categoryFilter.addEventListener("change", function(e){
 if (e.target.value === "Appetizer") {
     restaurantMenu.innerHTML = ""
-    menuList.filter(item => item.category === "Appetizer").forEach(createItem)
+    showMenu(menuList.filter(item => item.category === "Appetizer"))
 
 } else if (e.target.value === "Entree") {
     restaurantMenu.innerHTML = ""
-    menuList.filter(item => item.category === "Entree").forEach(createItem)
+    showMenu(menuList.filter(item => item.category === "Entree"))
 
 } else if (e.target.value === "Beverages") {
     restaurantMenu.innerHTML = ""
-    menuList.filter(item => item.category === "Beverages").forEach(createItem)
+    showMenu(menuList.filter(item => item.category === "Beverages"))
 } else if (e.target.value === "Dessert"){
     restaurantMenu.innerHTML = ""
-    menuList.filter(item => item.category === "Dessert").forEach(createItem)
+    showMenu(menuList.filter(item => item.category === "Dessert"))
 
 } else if (e.target.value === "All") {
     restaurantMenu.innerHTML = ""
-    menuList.forEach(createItem)
+    showMenu(menuList)
 }
 })
 
