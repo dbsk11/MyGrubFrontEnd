@@ -71,7 +71,6 @@ document.addEventListener('DOMContentLoaded', function(e){
     restaurantInfo = document.getElementById("restaurantInfo")
     function showMenu(menu){
         restaurantMenu.innerHTML = ""
-        menu.forEach(item => menuList.push(item))
         menu.forEach(createItem)
     };
 
@@ -103,6 +102,8 @@ document.addEventListener('DOMContentLoaded', function(e){
         if (e.target.className === "restaurant"){
             restaurantId = e.target.parentNode.dataset.id
             addRestaurantInfo(restaurantId)
+            menuList = []
+            fetch(`${restaurantMenusUrl}/${restaurantId}`).then(r => r.json()).then(menu => menu.forEach(item => menuList.push(item)))
             fetch(`${restaurantMenusUrl}/${restaurantId}`).then(r => r.json()).then(showMenu)
         } else if(e.target.className === "addToCart"){
             const itemId = e.target.parentNode.dataset.id
@@ -166,19 +167,19 @@ document.addEventListener('DOMContentLoaded', function(e){
     categoryFilter.addEventListener("change", function(e){
         if (e.target.value === "Appetizer") {
             restaurantMenu.innerHTML = ""
-            menuList.filter(item => item.category === "Appetizer").forEach(createItem)
+            showMenu(menuList.filter(item => item.category === "Appetizer"))
         } else if (e.target.value === "Entree") {
             restaurantMenu.innerHTML = ""
-            menuList.filter(item => item.category === "Entree").forEach(createItem)
+            showMenu(menuList.filter(item => item.category === "Entree"))
         } else if (e.target.value === "Beverages") {
             restaurantMenu.innerHTML = ""
-            menuList.filter(item => item.category === "Beverages").forEach(createItem)
+            showMenu(menuList.filter(item => item.category === "Beverages"))
         } else if (e.target.value === "Dessert"){
             restaurantMenu.innerHTML = ""
-            menuList.filter(item => item.category === "Dessert").forEach(createItem)
+            showMenu(menuList.filter(item => item.category === "Dessert"))
         } else if (e.target.value === "All") {
             restaurantMenu.innerHTML = ""
-            menuList.forEach(createItem)
+            showMenu(menuList)
         }
     })
 
