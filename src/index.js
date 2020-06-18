@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(e){
-    // constants
+// constants
     const usersCartUrl = "http://localhost:3000/users_carts"
     const cartItemUrl = "http://localhost:3000/cart_items"
     const restaurantMenusUrl = "http://localhost:3000/restaurant_menus"
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function(e){
         restaurantTag.dataset.id = restaurant.id
         restaurantTag.innerHTML = ""
         restaurantTag.innerHTML = `
-        <h3 class="restaurant">${restaurant.name} - <em>${restaurant.cuisine}</em></h3>
+        <h3 class="restaurant">${restaurant.name}</h3>
         <hr>
         `
         restaurants.append(restaurantTag)
@@ -142,7 +142,8 @@ document.addEventListener('DOMContentLoaded', function(e){
             cartList.forEach(item => item.remove())
             total = 0
             const pTotal = document.querySelector('.cart-total')
-            pTotal.innerText = `Total: $ 0`       
+            pTotal.innerText = `Total: $ 0`    
+            alert("Your order has been placed!")   
         }
     });
 
