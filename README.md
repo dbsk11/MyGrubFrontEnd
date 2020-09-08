@@ -20,4 +20,4 @@ MyGrub was built with a Rails backend which handles user authentication as well 
 ## How to Run (frontend)
 
 - Clone this repo as well as the [backend repo](https://github.com/dbsk11/MyGrubBackEnd), navigate to the project root in your terminal.
-- Open `index.html`
+- Run `open index.html`
