@@ -16,7 +16,6 @@ MyGrub was built with a Rails backend which handles user authentication as well 
 ## Software Requirements
 
 - Ruby on Rails
-- Javscript
 
 ## How to Run (frontend)
 
